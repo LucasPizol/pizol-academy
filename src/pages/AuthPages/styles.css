@@ -1,0 +1,9 @@
+.contentSide {
+  margin-left: 200px;
+}
+
+@media (max-width: 991px) {
+  .contentSide {
+    margin-left: 0;
+  }
+}
