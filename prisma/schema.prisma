@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Class {
+  id          Int            @id @default(autoincrement())
+  name        String
+  ownerId     Int
+  owner       User           @relation(fields: [ownerId], references: [id])
+  activity    Activity[]
+  class       ClassHasUser[]
+  invite_code String
+}
+
+model ClassHasUser {
+  id      Int    @id @default(autoincrement())
+  user    User   @relation(fields: [userId], references: [id])
+  userId  Int
+  class   Class  @relation(fields: [classId], references: [id])
+  classId Int
+  role    String
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  name         String
+  username     String         @unique
+  password     String
+  classHasUser ClassHasUser[]
+  class        Class[]
+  Activity     Activity[]
+}
+
+model Activity {
+  id           Int       @id @default(autoincrement())
+  title        String
+  resume       String?
+  objectives   String
+  abilities    Ability[]
+  total_time   Int
+  recurses     String
+  guide        String
+  pdf_file_url String
+  classId      Int
+  class        Class     @relation(fields: [classId], references: [id])
+  userId       Int
+  user         User      @relation(fields: [userId], references: [id])
+  isActive     Boolean
+}
+
+model Ability {
+  id       Int        @id @default(autoincrement())
+  name     String
+  Activity Activity[]
+}
