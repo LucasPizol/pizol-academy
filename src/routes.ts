@@ -7,6 +7,7 @@ import { AbilityController } from "./controllers/AbilityController";
 import { UsersController } from "./controllers/usersController";
 import { ClassHasUserController } from "./controllers/classHasUserController";
 import { ClassController } from "./controllers/classController";
+import { SendActivityController } from "./controllers/sendActivityController";
 
 const router = express.Router();
 
@@ -18,7 +19,11 @@ router.get("/users", AuthMiddleware.checkAuth, UsersController.get);
 
 router.get("/classes", AuthMiddleware.checkAuth, ClassHasUserController.getAll);
 router.post("/class/create", AuthMiddleware.checkAuth, ClassController.create);
-router.post("/class/join", AuthMiddleware.checkAuth, ClassHasUserController.joinClass);
+router.post(
+  "/class/join",
+  AuthMiddleware.checkAuth,
+  ClassHasUserController.joinClass
+);
 router.get("/class/:id", AuthMiddleware.checkAuth, ClassController.getById);
 
 router.post("/download", AuthMiddleware.checkAuth, PdfController.download);
@@ -31,6 +36,11 @@ router.post(
 router.get("/ability", AuthMiddleware.checkAuth, AbilityController.get);
 
 router.post("/activity", AuthMiddleware.checkAuth, ActivityController.create);
+router.post(
+  "/activity/send",
+  AuthMiddleware.checkAuth,
+  SendActivityController.create
+);
 router.get(
   "/activity/:id",
   AuthMiddleware.checkAuth,
@@ -41,6 +51,7 @@ router.put(
   AuthMiddleware.checkAuth,
   ActivityController.update
 );
+
 router.put(
   "/activity/activate/:activityId",
   AuthMiddleware.checkAuth,
@@ -51,6 +62,5 @@ router.put(
   AuthMiddleware.checkAuth,
   ActivityController.deactivate
 );
-
 
 export { router };

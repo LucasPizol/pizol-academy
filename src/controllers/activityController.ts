@@ -4,6 +4,8 @@ import { ActivityService } from "../services/activityService";
 import { ReactPdfService } from "../services/reactPdfService";
 import { RandomString } from "../helpers/randomString";
 import { ClassHasUserService } from "../services/classHasUserService";
+import fs from "fs";
+import path from "path";
 
 export abstract class ActivityController {
   static async create(req: AuthRequest, res: Response) {

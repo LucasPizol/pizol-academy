@@ -26,6 +26,16 @@ export abstract class ActivityService {
           },
         },
         abilities: true,
+        sendActivity: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
       where: {
         class: {

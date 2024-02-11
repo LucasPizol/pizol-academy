@@ -14,6 +14,7 @@ export abstract class ClassController {
       return res.status(200).json(myClass);
     } catch (error) {
       if (error instanceof Error)
+      console.log(error)
         return res.status(400).json({ error: error.message });
     }
   }

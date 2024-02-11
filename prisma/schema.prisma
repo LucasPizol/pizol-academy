@@ -36,11 +36,12 @@ model User {
   password     String
   classHasUser ClassHasUser[]
   class        Class[]
-  Activity     Activity[]
+  activity     Activity[]
+  sendActivity SendActivity[]
 }
 
 model Activity {
-  id           Int       @id @default(autoincrement())
+  id           Int            @id @default(autoincrement())
   title        String
   resume       String?
   objectives   String
@@ -50,14 +51,23 @@ model Activity {
   guide        String
   pdf_file_url String
   classId      Int
-  class        Class     @relation(fields: [classId], references: [id])
+  class        Class          @relation(fields: [classId], references: [id])
   userId       Int
-  user         User      @relation(fields: [userId], references: [id])
+  user         User           @relation(fields: [userId], references: [id])
   isActive     Boolean
+  sendActivity SendActivity[]
 }
 
 model Ability {
   id       Int        @id @default(autoincrement())
   name     String
   Activity Activity[]
+}
+
+model SendActivity {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  activityId Int
+  activity   Activity @relation(fields: [activityId], references: [id])
 }

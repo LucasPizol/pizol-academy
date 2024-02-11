@@ -38,6 +38,16 @@ export abstract class ClassService {
             title: true,
             user: true,
             total_time: true,
+            sendActivity: {
+              include: {
+                user: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
+              },
+            },
           },
         },
         class: true,
