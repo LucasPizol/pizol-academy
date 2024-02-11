@@ -1,22 +1,26 @@
 import { useState } from "react";
 import { Activity } from "./ActivityListView";
-import { CloudDownloadOutlined } from "@ant-design/icons";
+import {
+  CheckCircleOutlined,
+  CloudDownloadOutlined,
+  MoreOutlined,
+} from "@ant-design/icons";
 import { DownloadFile } from "./helpers/downloadFile";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { PrivateAPI } from "../../../api/PrivateAPI";
 import { useAuthContext } from "../../../context/AuthContext";
 import { Permissions } from "../../../api/Permissions";
-import { Button } from "antd";
-
-export const highPermissions = ["owner", "teacher"];
+import { Button, Popover, Typography } from "antd";
 
 export const ActivityListModel = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [open, setOpen] = useState(false);
+  const [activityModal, setActivityModal] = useState<Activity>();
   const { id } = useParams();
   const { user } = useAuthContext();
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["getTable" + id],
     queryFn: () => PrivateAPI.fetchData("/class/" + id),
   });
@@ -31,6 +35,10 @@ export const ActivityListModel = () => {
     refetch();
   };
 
+  const handleSendActivity = async (key: Activity) => {
+    setActivityModal(key);
+    setOpen(true);
+  };
 
   const columns = [
     {
@@ -67,34 +75,43 @@ export const ActivityListModel = () => {
   const adminColumns = [
     ...columns,
     {
-      title: "Editar",
-      dataIndex: "id",
-      render: (text: string) => (
-        <Link to={"/activity/" + Number(text)} state={{ classId: id }}>
-          Ver
-        </Link>
-      ),
-    },
-    {
       title: "Desativar",
-      dataIndex: "id",
-      render: (text: string) => {
-        const find = data?.data?.activity.find(
-          (activity: Activity) => activity.id === Number(text)
-        );
-
-        return find.isActive ? (
-          <Button
-            type="primary"
-            style={{ background: "#F00" }}
-            onClick={() => handleDeactivate(Number(text))}
+      dataIndex: "isActive",
+      render: (text: boolean, key: any) => {
+        return text ? (
+          <a
+            type="link"
+            onClick={() => handleDeactivate(key.id)}
+            style={{ color: "#f00" }}
           >
             Desativar
-          </Button>
+          </a>
         ) : (
-          <Button type="primary" onClick={() => handleActivate(Number(text))}>
+          <a type="link" onClick={() => handleActivate(key.id)}>
             Ativar
-          </Button>
+          </a>
+        );
+      },
+    },
+    {
+      title: "Ações",
+      dataIndex: "id",
+      render: (text: string) => {
+        const content = (
+          <div style={{ flexDirection: "column", display: "flex" }}>
+            <Link to={"/activity/" + Number(text)} state={{ classId: id }}>
+              Editar
+            </Link>
+            <Link to={"/activity/" + Number(text)} state={{ classId: id }}>
+              Entregas
+            </Link>
+          </div>
+        );
+
+        return (
+          <Popover content={content} title="Ações">
+            <MoreOutlined className="povOver" style={{ fontSize: "150%" }} />
+          </Popover>
         );
       },
     },
@@ -105,7 +122,25 @@ export const ActivityListModel = () => {
     {
       title: "Entregar",
       dataIndex: "id",
-      render: () => <Button type="primary">Entregar</Button>,
+      render: (text: string, key: Activity) => {
+        console.log(text)
+        const checkIfSent = key.sendActivity.find(
+          (activity) => activity.userId === user.id
+        );
+
+        return checkIfSent ? (
+          <div style={{ display: "flex", color: "#168CFF", gap: 4 }}>
+            <CheckCircleOutlined />
+            <Typography.Text style={{ color: "#168CFF" }}>
+              Enviado!
+            </Typography.Text>
+          </div>
+        ) : (
+          <Button type="primary" onClick={() => handleSendActivity(key)}>
+            Entregar
+          </Button>
+        );
+      },
     },
   ];
 
@@ -140,18 +175,24 @@ export const ActivityListModel = () => {
     selectedRowKeys,
     classe: {
       ...data?.data,
-      activity: data?.data?.activity.map((activity: any) => {
-        return {
-          ...activity,
-          ownerName: activity?.user?.name,
-        };
-      }),
+      activity: data?.data?.activity
+        .map((activity: Activity) => {
+          return {
+            ...activity,
+            ownerName: activity?.user?.name,
+          };
+        })
+        .sort((a: Activity, b: Activity) => {
+          return a.title.localeCompare(b.title);
+        }),
     },
-    isLoading,
     columns: Permissions.CheckAdminPermission(userPermission)
       ? adminColumns
       : userColumns,
-    classId: id,
     userPermission,
+    open,
+    setOpen,
+    activityModal,
+    refetch,
   };
 };

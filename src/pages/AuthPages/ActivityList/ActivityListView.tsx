@@ -2,6 +2,8 @@ import { Button, Table, Typography } from "antd";
 import { ActivityListModel } from "./ActivityListModel";
 import { useNavigate } from "react-router-dom";
 import { Permissions } from "../../../api/Permissions";
+import { Loading } from "../../../components/Loading/Loading";
+import DragAndDrop from "./components/DragAndDrop";
 
 export type Activity = {
   id?: number;
@@ -18,24 +20,27 @@ export type Activity = {
   };
   guide: string;
   abilities: { id: number; name: string }[];
-  participants: { id: number; name: string }[];
   isActive: boolean;
   creatorName: string;
+  sendActivity: { userId: number; activityId: string }[];
 };
 
 export const ActivityListView = ({
-  isLoading,
   selectedRowKeys,
   rowSelection,
   hasSelected,
   downloadMany,
   classe,
   columns,
+  open,
   userPermission,
+  setOpen,
+  activityModal,
+  refetch
 }: ReturnType<typeof ActivityListModel>) => {
   const navigate = useNavigate();
 
-  if (!classe) return;
+  if (!classe) return <Loading />;
 
   return (
     <div style={{ background: "#fff", padding: 16, borderRadius: 12 }}>
@@ -51,12 +56,7 @@ export const ActivityListView = ({
         }}
       >
         <div>
-          <Button
-            type="primary"
-            onClick={downloadMany}
-            disabled={!hasSelected}
-            loading={isLoading}
-          >
+          <Button type="primary" onClick={downloadMany} disabled={!hasSelected}>
             Download
           </Button>
 
@@ -87,7 +87,6 @@ export const ActivityListView = ({
                 state: { classId: classe.id },
               });
             }}
-            loading={isLoading}
           >
             + Novo
           </Button>
@@ -99,6 +98,14 @@ export const ActivityListView = ({
         dataSource={classe?.activity}
         style={{ overflowX: "scroll" }}
         rowKey="id"
+      />
+
+      <DragAndDrop
+        open={open}
+        setOpen={setOpen}
+        myClass={classe}
+        activity={activityModal!}
+        refetch={refetch}
       />
     </div>
   );

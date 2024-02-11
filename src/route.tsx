@@ -6,14 +6,10 @@ import { ClassList } from "./pages/AuthPages/ClassList";
 import { ActivityList } from "./pages/AuthPages/ActivityList";
 import { ActivityPage } from "./pages/AuthPages/UpdateActivity";
 import { NewActivityPage } from "./pages/AuthPages/NewActivityPage";
-import { Loading } from "./components/Loading/Loading";
 import { CustomLayout } from "./pages/AuthPages/Layout";
 
 export const MyRoutes = () => {
-  const { user, isLoading } = useAuthContext();
-  console.log(user);
-
-  if (isLoading) return <Loading />;
+  const { user } = useAuthContext();
 
   return (
     <>

@@ -67,7 +67,7 @@ export abstract class PrivateAPI {
   }
 
   static async blobPost(endpoint: string, body: any) {
-    console.log(body)
+    console.log(body);
     return await PrivateAPI.fetchBlob(endpoint, "POST", body);
   }
 }

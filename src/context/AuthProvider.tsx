@@ -3,6 +3,7 @@ import { AuthContext } from "./AuthContext";
 import Swal from "sweetalert2";
 import { PublicAPI } from "../api/PublicAPI";
 import { PrivateAPI } from "../api/PrivateAPI";
+import { Loading } from "../components/Loading/Loading";
 
 type User = {
   id: number;
@@ -22,13 +23,11 @@ export type Authentication = {
 
 export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState<User | null>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const login = async (authParams: Authentication) => {
     setIsLoading(true);
-
     const data = await PublicAPI.login(authParams);
-
     if (data.error) {
       Swal.fire({
         title: "Erro",
@@ -60,16 +59,14 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     PrivateAPI.get("/user").then(({ data, error }) => {
-      console.log(error);
       if (!error) setUser(data);
 
       setIsLoading(false);
     });
   }, []);
 
-  console.log(user)
+  if (isLoading) return <Loading />;
 
   return (
     <AuthContext.Provider value={{ user, login, register, isLoading }}>
