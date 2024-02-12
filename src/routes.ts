@@ -3,7 +3,7 @@ import { AuthController } from "./controllers/authController";
 import { AuthMiddleware } from "./middlewares/auth";
 import { ActivityController } from "./controllers/activityController";
 import { PdfController } from "./controllers/pdfController";
-import { AbilityController } from "./controllers/AbilityController";
+import { AbilityController } from "./controllers/abilityController";
 import { UsersController } from "./controllers/usersController";
 import { ClassHasUserController } from "./controllers/classHasUserController";
 import { ClassController } from "./controllers/classController";

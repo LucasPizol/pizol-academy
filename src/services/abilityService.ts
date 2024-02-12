@@ -1,4 +1,4 @@
-import { prisma } from "../prisma";
+import { prisma } from "../prisma.ts";
 
 export abstract class AbilityService {
   static async get() {
