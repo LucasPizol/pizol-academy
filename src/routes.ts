@@ -4,7 +4,6 @@ import { AuthMiddleware } from "./middlewares/auth";
 import { ActivityController } from "./controllers/activityController";
 import { PdfController } from "./controllers/pdfController";
 import { AbilityController } from "./controllers/abilityController";
-import { UsersController } from "./controllers/usersController";
 import { ClassHasUserController } from "./controllers/classHasUserController";
 import { ClassController } from "./controllers/classController";
 import { SendActivityController } from "./controllers/sendActivityController";
@@ -15,7 +14,6 @@ router.post("/login", AuthController.login);
 router.post("/register", AuthController.register);
 
 router.get("/user", AuthMiddleware.checkAuth, AuthController.getUser);
-router.get("/users", AuthMiddleware.checkAuth, UsersController.get);
 
 router.get("/classes", AuthMiddleware.checkAuth, ClassHasUserController.getAll);
 router.post("/class/create", AuthMiddleware.checkAuth, ClassController.create);
