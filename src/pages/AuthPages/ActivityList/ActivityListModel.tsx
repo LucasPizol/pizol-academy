@@ -26,12 +26,12 @@ export const ActivityListModel = () => {
 
   const handleDeactivate = async (id: number) => {
     await PrivateAPI.put("/activity/deactivate/" + id);
-    refetch();
+    await refetch();
   };
 
   const handleActivate = async (id: number) => {
     await PrivateAPI.put("/activity/activate/" + id);
-    refetch();
+    await refetch();
   };
 
   const handleSendActivity = async (key: Activity) => {
@@ -126,7 +126,7 @@ export const ActivityListModel = () => {
           (activity) => activity.userId === user.id
         );
 
-        console.log(text)
+        console.log(text);
 
         return checkIfSent ? (
           <div style={{ display: "flex", color: "#168CFF", gap: 4 }}>

@@ -32,16 +32,27 @@ export const SiderComponent = () => {
     <Sider
       breakpoint="lg"
       collapsedWidth="0"
-      style={{ minHeight: "100vh", position: "fixed", zIndex: "999" }}
+      style={{
+        minHeight: "100vh",
+        position: "fixed",
+        zIndex: "999",
+        background: "#fff",
+        boxShadow: "2px 0px 15px 0px rgba(0,0,0,0.187)",
+      }}
     >
       <h1 className={styles.name}>{user?.name?.split(" ")[0]}</h1>
-      <Menu
-        theme="dark"
-        mode="inline"
-        defaultSelectedKeys={["4"]}
-        items={items}
-        onClick={({ key }) => navigate(key)}
-      />
+      <div className={styles.siderDiv}>
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={["4"]}
+          items={items}
+          onClick={({ key }) => navigate(key)}
+          style={{
+            background: "#1677ff",
+            fontWeight: "bold",
+          }}
+        />
+      </div>
     </Sider>
   );
 };

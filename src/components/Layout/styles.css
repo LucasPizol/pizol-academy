@@ -11,6 +11,18 @@
   }
 }
 
+.ant-menu-title-content {
+  color: #fff;
+}
+
+.ant-menu-submenu-arrow {
+  color: #fff !important;
+}
+
+.ant-menu-item-selected {
+  background-color: transparent !important;
+}
+
 @media (max-width: 991px) {
   .contentSide {
     margin-left: 0;

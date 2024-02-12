@@ -6,7 +6,7 @@ import { ClassList } from "./pages/AuthPages/ClassList";
 import { ActivityList } from "./pages/AuthPages/ActivityList";
 import { ActivityPage } from "./pages/AuthPages/UpdateActivity";
 import { NewActivityPage } from "./pages/AuthPages/NewActivityPage";
-import { CustomLayout } from "./pages/AuthPages/Layout";
+import { CustomLayout } from "./components/Layout/Layout";
 
 export const MyRoutes = () => {
   const { user } = useAuthContext();

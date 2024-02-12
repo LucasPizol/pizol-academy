@@ -35,17 +35,30 @@ export const NewActivityPageView = ({
   if (isLoading) return <Spinner size={35} color="blue" />;
 
   return (
-    <>
+    <main
+      style={{
+        padding: 16,
+      }}
+    >
       <div
         style={{
           display: "flex",
           alignItems: "center",
           gap: 12,
           marginBottom: 8,
+          color: "#1677ff",
         }}
       >
-        <ArrowLeftOutlined onClick={() => history.back()} size={30} />
-        <Typography.Title style={{ margin: 0 }}>Atividade</Typography.Title>
+        <ArrowLeftOutlined
+          onClick={() => history.back()}
+          size={30}
+          style={{ fontSize: "150%" }}
+        />
+        <Typography.Title
+          style={{ margin: 0, color: "#1677ff", fontWeight: "bold" }}
+        >
+          Atividade
+        </Typography.Title>
       </div>
       <Form
         {...formItemLayout}
@@ -108,6 +121,6 @@ export const NewActivityPageView = ({
           </Button>
         </Form.Item>
       </Form>
-    </>
+    </main>
   );
 };

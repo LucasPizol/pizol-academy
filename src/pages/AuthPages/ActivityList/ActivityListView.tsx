@@ -33,7 +33,7 @@ export const ActivityListView = ({
   setOpen,
   activityModal,
   refetch,
-  isLoading
+  isLoading,
 }: ReturnType<typeof ActivityListModel>) => {
   const navigate = useNavigate();
 
@@ -41,9 +41,24 @@ export const ActivityListView = ({
 
   return (
     <div style={{ background: "#fff", padding: 16, borderRadius: 12 }}>
-      <Typography.Title style={{ marginTop: 0, marginBottom: 32 }}>
-        {classe.name}
-      </Typography.Title>
+      <div style={{ marginBottom: 32 }}>
+        <Typography.Title
+          style={{
+            marginTop: 0,
+            fontWeight: "bold",
+            color: "#1677ff",
+            marginBottom: 0,
+          }}
+        >
+          {classe.name}
+        </Typography.Title>
+
+        {!Permissions.CheckAdminPermission(userPermission) ? null : (
+          <Typography.Text>
+            Seu código de acesso: {classe.invite_code}
+          </Typography.Text>
+        )}
+      </div>
       <div
         style={{
           marginBottom: 16,
@@ -61,11 +76,7 @@ export const ActivityListView = ({
             style={{
               marginLeft: 8,
             }}
-          >
-            {!Permissions.CheckAdminPermission(userPermission)
-              ? null
-              : classe.invite_code}
-          </span>
+          ></span>
         </div>
 
         {!Permissions.CheckAdminPermission(userPermission) ? null : (
