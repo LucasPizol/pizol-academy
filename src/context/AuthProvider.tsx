@@ -34,6 +34,8 @@ export const AuthProvider = ({ children }: any) => {
         icon: "error",
         text: data.error,
       });
+      setIsLoading(false);
+
       return;
     }
 
@@ -60,6 +62,8 @@ export const AuthProvider = ({ children }: any) => {
         icon: "error",
         text: data.error,
       });
+      setIsLoading(false);
+
       return;
     }
     sessionStorage.setItem("AUTH_SESSION_KEY", data.token);
