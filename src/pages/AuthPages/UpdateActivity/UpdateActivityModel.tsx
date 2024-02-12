@@ -19,7 +19,7 @@ export const UpdateActivityModel = () => {
   const queries = useQueries({
     queries: promiseEndpoints.map((endpoint, index) => ({
       queryKey: ["getQuery" + index],
-      queryFn: () => PrivateAPI.fetchData(endpoint),
+      queryFn: () => PrivateAPI.get(endpoint),
     })),
   });
 
@@ -32,9 +32,8 @@ export const UpdateActivityModel = () => {
       classId: Number(location.state.classId),
     };
 
-    const data = await PrivateAPI.fetchData(
+    const data = await PrivateAPI.put(
       "/activity/" + id,
-      "PUT",
       fieldValues
     );
 

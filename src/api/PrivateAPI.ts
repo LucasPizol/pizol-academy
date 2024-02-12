@@ -1,5 +1,5 @@
 export abstract class PrivateAPI {
-  static async fetchData(
+  static async #fetchData(
     endpoint: string,
     method?: "POST" | "PUT" | "DELETE",
     body?: any
@@ -26,7 +26,7 @@ export abstract class PrivateAPI {
     };
   }
 
-  static async fetchBlob(
+  static async #fetchBlob(
     endpoint: string,
     method?: "POST" | "PUT" | "DELETE",
     body?: any
@@ -51,22 +51,22 @@ export abstract class PrivateAPI {
   }
 
   static async get(endpoint: string) {
-    return await PrivateAPI.fetchData(endpoint);
+    return await PrivateAPI.#fetchData(endpoint);
   }
 
   static async post(endpoint: string, body: any) {
-    return await PrivateAPI.fetchData(endpoint, "POST", body);
+    return await PrivateAPI.#fetchData(endpoint, "POST", body);
   }
 
   static async put(endpoint: string, body?: any) {
-    return await PrivateAPI.fetchData(endpoint, "PUT", body);
+    return await PrivateAPI.#fetchData(endpoint, "PUT", body);
   }
 
   static async delete(endpoint: string, body?: any) {
-    return await PrivateAPI.fetchData(endpoint, "DELETE", body);
+    return await PrivateAPI.#fetchData(endpoint, "DELETE", body);
   }
 
   static async blobPost(endpoint: string, body: any) {
-    return await PrivateAPI.fetchBlob(endpoint, "POST", body);
+    return await PrivateAPI.#fetchBlob(endpoint, "POST", body);
   }
 }

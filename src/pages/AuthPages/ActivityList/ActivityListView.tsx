@@ -50,7 +50,7 @@ export const ActivityListView = ({
             marginBottom: 0,
           }}
         >
-          {classe.name}
+          {classe.name ?? "Carregando..."}
         </Typography.Title>
 
         {!Permissions.CheckAdminPermission(userPermission) ? null : (

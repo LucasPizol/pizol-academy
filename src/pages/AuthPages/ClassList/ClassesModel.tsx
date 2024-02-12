@@ -5,7 +5,7 @@ import { PrivateAPI } from "../../../api/PrivateAPI";
 export const ClassesModel = () => {
   const { data, refetch, isLoading } = useQuery({
     queryKey: ["getClasses"],
-    queryFn: () => PrivateAPI.fetchData("/classes"),
+    queryFn: () => PrivateAPI.get("/classes"),
   });
 
   const joinClass = async (invite_code: string) => {

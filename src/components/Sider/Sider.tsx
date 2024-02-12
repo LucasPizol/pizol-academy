@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Button, Flex, Layout, Menu } from "antd";
 import styles from "./styles.module.css";
 import { useAuthContext } from "../../context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const { Sider } = Layout;
 
 export const SiderComponent = () => {
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
   const navigate = useNavigate();
 
   const { data } = useQuery({
@@ -38,10 +38,11 @@ export const SiderComponent = () => {
         zIndex: "999",
         background: "#fff",
         boxShadow: "2px 0px 15px 0px rgba(0,0,0,0.187)",
+        height: "100%",
       }}
     >
       <h1 className={styles.name}>{user?.name?.split(" ")[0]}</h1>
-      <div className={styles.siderDiv}>
+      <Flex vertical  className={styles.siderDiv} style={{ height: "100%", gap: 12 }}>
         <Menu
           mode="inline"
           defaultSelectedKeys={["4"]}
@@ -52,7 +53,10 @@ export const SiderComponent = () => {
             fontWeight: "bold",
           }}
         />
-      </div>
+        <Button type="primary" style={{ background: "#f00", width: "100%" }} onClick={logout}>
+          Logout
+        </Button>
+      </Flex>
     </Sider>
   );
 };

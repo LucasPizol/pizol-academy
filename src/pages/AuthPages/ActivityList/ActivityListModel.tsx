@@ -21,7 +21,7 @@ export const ActivityListModel = () => {
 
   const { data, refetch, isRefetching } = useQuery({
     queryKey: ["getTable" + id],
-    queryFn: () => PrivateAPI.fetchData("/class/" + id),
+    queryFn: () => PrivateAPI.get("/class/" + id),
   });
 
   const handleDeactivate = async (id: number) => {

@@ -42,6 +42,15 @@ export const AuthProvider = ({ children }: any) => {
     setIsLoading(false);
   };
 
+  const logout = async () => {
+    setIsLoading(true);
+
+    sessionStorage.removeItem("AUTH_SESSION_KEY");
+    setUser(undefined);
+
+    setIsLoading(false);
+  };
+
   const register = async (authParams: Authentication) => {
     setIsLoading(true);
     const data = await PublicAPI.register(authParams);
@@ -69,7 +78,7 @@ export const AuthProvider = ({ children }: any) => {
   if (isLoading) return <Loading />;
 
   return (
-    <AuthContext.Provider value={{ user, login, register, isLoading }}>
+    <AuthContext.Provider value={{ user, login, register, isLoading, logout }}>
       {children}
     </AuthContext.Provider>
   );

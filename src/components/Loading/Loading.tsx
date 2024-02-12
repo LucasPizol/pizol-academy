@@ -10,7 +10,7 @@ export const Loading = () => {
         height: "100vh",
       }}
     >
-      <Spinner color="blue" size={45} />
+      <Spinner color="#1677ff" size={45} />
     </div>
   );
 };
