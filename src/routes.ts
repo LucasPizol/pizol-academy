@@ -27,11 +27,6 @@ router.post(
 router.get("/class/:id", AuthMiddleware.checkAuth, ClassController.getById);
 
 router.post("/download", AuthMiddleware.checkAuth, PdfController.download);
-router.post(
-  "/download/many",
-  AuthMiddleware.checkAuth,
-  PdfController.downloadMany
-);
 
 router.get("/ability", AuthMiddleware.checkAuth, AbilityController.get);
 

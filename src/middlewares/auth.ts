@@ -7,10 +7,6 @@ type User = {
   id: number;
   name: string;
   username: string;
-  company: {
-    id: number;
-    name: string;
-  };
 };
 
 export interface AuthRequest extends Request {
@@ -42,7 +38,6 @@ export abstract class AuthMiddleware {
       }
 
       req.user = {
-        company: user.Company,
         id: user.id,
         name: user.name,
         username: user.username,

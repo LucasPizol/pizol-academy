@@ -7,6 +7,7 @@ import { ClassHasUserService } from "../services/classHasUserService";
 import fs from "fs";
 import path from "path";
 
+
 export abstract class ActivityController {
   static async create(req: AuthRequest, res: Response) {
     const { id } = req.user!;
