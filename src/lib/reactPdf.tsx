@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Document,
-  Font,
   Page,
   StyleSheet,
   Text,
@@ -59,18 +58,10 @@ export const MyDocument = ({ data }: Props) => (
   </Document>
 );
 
-Font.register({
-  family: "Poppins",
-  fonts: [
-    { src: "./files/Poppins-Regular.ttf" },
-    { src: "./files/Poppins-Bold.ttf", fontWeight: "bold" },
-  ],
-});
 
 const styles = StyleSheet.create({
   page: {
     padding: 32,
-    fontFamily: "Poppins",
   },
   titleView: {
     padding: 10,
