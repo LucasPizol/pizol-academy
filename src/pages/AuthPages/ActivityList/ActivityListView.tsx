@@ -26,17 +26,14 @@ export type Activity = {
 };
 
 export const ActivityListView = ({
-  selectedRowKeys,
-  rowSelection,
-  hasSelected,
-  downloadMany,
   classe,
   columns,
   open,
   userPermission,
   setOpen,
   activityModal,
-  refetch
+  refetch,
+  isLoading
 }: ReturnType<typeof ActivityListModel>) => {
   const navigate = useNavigate();
 
@@ -56,8 +53,8 @@ export const ActivityListView = ({
         }}
       >
         <div>
-          <Button type="primary" onClick={downloadMany} disabled={!hasSelected}>
-            Download
+          <Button type="primary" onClick={() => refetch()} loading={isLoading}>
+            Atualizar
           </Button>
 
           <span
@@ -65,15 +62,7 @@ export const ActivityListView = ({
               marginLeft: 8,
             }}
           >
-            {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
-          </span>
-
-          <span
-            style={{
-              marginLeft: 8,
-            }}
-          >
-            {!Permissions.CheckAdminPermission(userPermission) || hasSelected
+            {!Permissions.CheckAdminPermission(userPermission)
               ? null
               : classe.invite_code}
           </span>
@@ -93,7 +82,6 @@ export const ActivityListView = ({
         )}
       </div>
       <Table
-        rowSelection={rowSelection}
         columns={columns}
         dataSource={classe?.activity}
         style={{ overflowX: "scroll" }}
@@ -106,6 +94,7 @@ export const ActivityListView = ({
         myClass={classe}
         activity={activityModal!}
         refetch={refetch}
+        isLoading={isLoading}
       />
     </div>
   );

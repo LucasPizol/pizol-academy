@@ -29,6 +29,7 @@ export const NewActivityPageView = ({
   abilities,
   isLoading,
   handleSubmit,
+  loadingBtn,
   form,
 }: ReturnType<typeof NewActivityPageModel>) => {
   if (isLoading) return <Spinner size={35} color="blue" />;
@@ -102,7 +103,7 @@ export const NewActivityPageView = ({
         </Row>
 
         <Form.Item>
-          <Button type="primary" onClick={handleSubmit}>
+          <Button type="primary" onClick={handleSubmit} loading={loadingBtn}>
             Submeter
           </Button>
         </Form.Item>

@@ -14,13 +14,12 @@ import { Permissions } from "../../../api/Permissions";
 import { Button, Popover, Typography } from "antd";
 
 export const ActivityListModel = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [open, setOpen] = useState(false);
   const [activityModal, setActivityModal] = useState<Activity>();
   const { id } = useParams();
   const { user } = useAuthContext();
 
-  const { data, refetch } = useQuery({
+  const { data, refetch, isRefetching } = useQuery({
     queryKey: ["getTable" + id],
     queryFn: () => PrivateAPI.fetchData("/class/" + id),
   });
@@ -123,7 +122,6 @@ export const ActivityListModel = () => {
       title: "Entregar",
       dataIndex: "id",
       render: (text: string, key: Activity) => {
-        console.log(text)
         const checkIfSent = key.sendActivity.find(
           (activity) => activity.userId === user.id
         );
@@ -148,31 +146,7 @@ export const ActivityListModel = () => {
     (classUser: { userId: number }) => classUser.userId === user.id
   ).role;
 
-  const downloadMany = async () => {
-    const returnFilesName = selectedRowKeys.map((id) => {
-      const findName = data?.data?.activity.find(
-        (activity: Activity) => activity.id === Number(id)
-      );
-
-      return findName.pdf_file_url;
-    });
-
-    await DownloadFile.downloadMany(returnFilesName);
-  };
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-  const hasSelected = selectedRowKeys.length > 0;
-
   return {
-    rowSelection,
-    hasSelected,
-    downloadMany,
-    selectedRowKeys,
     classe: {
       ...data?.data,
       activity: data?.data?.activity
@@ -194,5 +168,6 @@ export const ActivityListModel = () => {
     setOpen,
     activityModal,
     refetch,
+    isLoading: isRefetching,
   };
 };

@@ -13,12 +13,14 @@ const DragAndDrop = ({
   myClass,
   activity,
   refetch,
+  isLoading,
 }: {
   open: boolean;
   setOpen: any;
   myClass: any;
   activity: Activity;
   refetch: any;
+  isLoading: boolean;
 }) => {
   const [files, setFiles] = useState<RcFile[]>();
   const [messageApi, contextHolder] = message.useMessage();
@@ -68,6 +70,7 @@ const DragAndDrop = ({
       open={open}
       onCancel={() => setOpen(!open)}
       onOk={handleSendFile}
+      confirmLoading={isLoading}
     >
       <Dragger
         beforeUpload={async (file) => {
