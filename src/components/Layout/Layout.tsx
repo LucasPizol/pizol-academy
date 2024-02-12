@@ -1,7 +1,6 @@
 import { Layout } from "antd";
 import { SiderComponent } from "../Sider/Sider";
 import "./styles.css";
-import { useState } from "react";
 const { Content } = Layout;
 
 export const CustomLayout = ({ children }: { children: any }) => {
