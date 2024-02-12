@@ -126,6 +126,8 @@ export const ActivityListModel = () => {
           (activity) => activity.userId === user.id
         );
 
+        console.log(text)
+
         return checkIfSent ? (
           <div style={{ display: "flex", color: "#168CFF", gap: 4 }}>
             <CheckCircleOutlined />
