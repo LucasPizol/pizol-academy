@@ -1,5 +1,12 @@
 import React from "react";
-import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
+import {
+  Document,
+  Font,
+  Page,
+  StyleSheet,
+  Text,
+  View,
+} from "@react-pdf/renderer";
 import { ActivityDocument } from "../services/reactPdfService";
 
 type Props = {
@@ -52,18 +59,32 @@ export const MyDocument = ({ data }: Props) => (
   </Document>
 );
 
+Font.register({
+  family: "Poppins",
+  fonts: [
+    { src: "./files/Poppins-Regular.ttf" },
+    { src: "./files/Poppins-Bold.ttf", fontWeight: "bold" },
+  ],
+});
+
 const styles = StyleSheet.create({
   page: {
-    padding: 20,
+    padding: 32,
+    fontFamily: "Poppins",
   },
   titleView: {
     padding: 10,
-    borderBottom: "0.5px solid black",
+    backgroundColor: "#4383FF",
+    width: "100%",
+    borderRadius: 6,
+    marginBottom: 12,
   },
   titleText: {
-    fontSize: 24,
-    color: "#363636",
+    fontSize: 22,
+    color: "#fff",
     textAlign: "center",
+    textTransform: "uppercase",
+    fontWeight: "bold",
   },
   content: {
     display: "flex",
@@ -72,24 +93,14 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   subtitle: {
-    fontSize: 18,
-    borderBottom: "0.5px solid #363636",
-    paddingBottom: 4,
-    marginBottom: 8
+    fontSize: 15,
+    marginBottom: 2,
+    fontWeight: "bold",
+    color: "#363636",
   },
   text: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#363636",
     textAlign: "justify",
-  },
-  column: {
-    flex: 1,
-  },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    gap: "10px",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
   },
 });
