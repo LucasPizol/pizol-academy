@@ -6,7 +6,7 @@ const main = async () => {
   await prisma.ability.createMany({
     data: [
       { name: "Conviver" },
-      { name: "Conviver" },
+      { name: "Brincar" },
       { name: "Participar" },
       { name: "Explorar" },
       { name: "Expressar" },
