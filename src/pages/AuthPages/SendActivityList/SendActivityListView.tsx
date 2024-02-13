@@ -33,6 +33,8 @@ export const SendActivityListView = ({
 }: ReturnType<typeof SendActivityListModel>) => {
   if (!data?.data) return <Loading />;
 
+  console.log(location.state.users.map((user: any) => user.user));
+
   return (
     <div style={{ background: "#fff", padding: 16, borderRadius: 12 }}>
       <Flex align="center" gap={12} style={{ marginBottom: 32 }}>
@@ -60,7 +62,7 @@ export const SendActivityListView = ({
             onClick={() => DownloadFile.downloadImage(Number(id))}
             type="primary"
           >
-            Download Ativididades
+            Download Atividades
           </Button>
           <Button type="default" onClick={() => refetch()} loading={isLoading}>
             Atualizar
@@ -68,7 +70,9 @@ export const SendActivityListView = ({
         </Flex>
       </div>
       <Table
-        dataSource={location.state.users.map((user: any) => user.user)}
+        dataSource={location.state.users
+          .filter((user: any) => user.role !== "owner")
+          .map((user: any) => user.user)}
         columns={columns}
         style={{ overflowX: "scroll" }}
         rowKey="id"

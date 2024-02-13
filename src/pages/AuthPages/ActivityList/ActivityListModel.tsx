@@ -62,7 +62,7 @@ export const ActivityListModel = () => {
       render: (text: any) => {
         return (
           <Typography.Text>
-            {text.length}/{data?.data?.class?.length}
+            {text.length}/{data?.data?.class?.filter((user:any) => user.role !=="owner").length}
           </Typography.Text>
         );
       },
