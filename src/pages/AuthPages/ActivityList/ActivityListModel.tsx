@@ -57,8 +57,15 @@ export const ActivityListModel = () => {
       sorter: (a: any, b: any) => a.total_time - b.total_time,
     },
     {
-      title: "Criador",
-      dataIndex: "ownerName",
+      title: "Entregas",
+      dataIndex: "sendActivity",
+      render: (text: any) => {
+        return (
+          <Typography.Text>
+            {text.length}/{data?.data?.class?.length}
+          </Typography.Text>
+        );
+      },
     },
     {
       title: "Download PDF",
@@ -101,7 +108,10 @@ export const ActivityListModel = () => {
             <Link to={"/activity/" + Number(text)} state={{ classId: id }}>
               Editar
             </Link>
-            <Link to={"/activity/" + Number(text)} state={{ classId: id }}>
+            <Link
+              to={"/sendactivity/" + Number(text)}
+              state={{ className: data?.data?.name, users: data?.data?.class }}
+            >
               Entregas
             </Link>
           </div>

@@ -1,4 +1,4 @@
-import { Button, Table, Typography } from "antd";
+import { Button, Flex, Table, Typography } from "antd";
 import { ActivityListModel } from "./ActivityListModel";
 import { useNavigate } from "react-router-dom";
 import { Permissions } from "../../../api/Permissions";
@@ -39,6 +39,8 @@ export const ActivityListView = ({
 
   if (!classe) return <Loading />;
 
+  console.log(classe);
+
   return (
     <div style={{ background: "#fff", padding: 16, borderRadius: 12 }}>
       <div style={{ marginBottom: 32 }}>
@@ -59,16 +61,15 @@ export const ActivityListView = ({
           </Typography.Text>
         )}
       </div>
-      <div
+      <Flex
+        align="center"
+        justify="space-between"
         style={{
           marginBottom: 16,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
         }}
       >
         <div>
-          <Button type="primary" onClick={() => refetch()} loading={isLoading}>
+          <Button type="default" onClick={() => refetch()} loading={isLoading}>
             Atualizar
           </Button>
 
@@ -91,7 +92,7 @@ export const ActivityListView = ({
             + Novo
           </Button>
         )}
-      </div>
+      </Flex>
       <Table
         columns={columns}
         dataSource={classe?.activity}
