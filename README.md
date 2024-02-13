@@ -23,7 +23,7 @@ Agora, clone este repositório com o comando:
 
 Agora, crie um arquivo .env no diretório da pasta api, e inclua as seguintes variáveis de ambiente:
 
-- DATABASE_URL= "URI do seu DB mysql"
+- DATABASE_URL= "URI do seu DB postgres"
 - JSON_TOKEN= "Uma string aleatória para seu autenticador"
 - BUCKET_NAME= "Nome do seu bucket AWS S3"
 - AWS_ACCESS_KEY_ID= "Chave de acesso do seu usuário IAM"
