@@ -17,7 +17,7 @@ export abstract class SendActivityController {
       const mappedFunctions = filesBase64.map((file: string, index: number) => {
         return SendActivityService.saveImage(
           `sendedActivities/
-          Classe ${myClass.ownerId} - ${myClass.name} - ${myClass.owner.name}/
+          Classe ${myClass.id} - ${myClass.name} - ${myClass.owner.name}/
           Atividade ${activity.id} - ${activity.title}/
           Aluno ${id} - ${name}`,
           file,
@@ -82,7 +82,6 @@ export abstract class SendActivityController {
 
       return res.status(200).send(generatedZip);
     } catch (error) {
-      console.log(error);
       if (error instanceof Error)
         return res.status(400).json({ error: error.message });
     }

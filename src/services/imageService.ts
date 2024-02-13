@@ -20,6 +20,7 @@ export abstract class ImageService {
       })
     );
 
+
     if (!pdf.Contents) return;
 
     const filesPromises = pdf.Contents.map((content) => {

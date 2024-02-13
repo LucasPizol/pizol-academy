@@ -33,7 +33,7 @@ export abstract class ClassController {
       }
     }
 
-    checkFunction();
+    await checkFunction();
 
     try {
       const myClass = await ClassService.create(name, id, invite_code);
