@@ -50,7 +50,16 @@ export abstract class ClassService {
             },
           },
         },
-        class: true,
+        class: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
       },
     });
 

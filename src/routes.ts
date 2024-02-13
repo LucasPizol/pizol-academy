@@ -56,4 +56,15 @@ router.put(
   ActivityController.deactivate
 );
 
+router.get(
+  "/sendActivity/:activityId",
+  AuthMiddleware.checkAuth,
+  SendActivityController.getByActivity
+);
+router.post(
+  "/sendActivity/download",
+  AuthMiddleware.checkAuth,
+  SendActivityController.getSendActivity
+);
+
 export { router };

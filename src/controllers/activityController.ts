@@ -1,7 +1,7 @@
 import { Response } from "express";
 import { AuthRequest } from "../middlewares/auth";
 import { ActivityService } from "../services/activityService";
-import { ReactPdfService } from "../services/reactPdfService";
+import { ReactPdfService } from "../services/pdfService";
 import { RandomString } from "../helpers/randomString";
 
 export abstract class ActivityController {

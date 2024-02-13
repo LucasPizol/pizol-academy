@@ -1,7 +1,7 @@
 import path from "path";
 import { AuthRequest } from "../middlewares/auth";
 import { Response } from "express";
-import { ReactPdfService } from "../services/reactPdfService";
+import { ReactPdfService } from "../services/pdfService";
 
 export abstract class PdfController {
   static async download(req: AuthRequest, res: Response) {

@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import { ActivityDocument } from "../services/reactPdfService";
+import { ActivityDocument } from "../services/pdfService";
 
 type Props = {
   data: ActivityDocument;
