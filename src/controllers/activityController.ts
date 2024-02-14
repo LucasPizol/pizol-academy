@@ -162,12 +162,11 @@ export abstract class ActivityController {
       return res.status(404).json({ error: "Atividade não encontrada." });
     }
 
-    const pdfFileName = getActivity.pdf_file_url.split("/")[1];
 
     try {
       const activity = await ActivityService.activate(Number(activityId));
 
-      await ReactPdfService.saveData(pdfFileName, {
+      await ReactPdfService.saveData(getActivity.pdf_file_url, {
         ...activity,
         isActive: true,
       });
