@@ -17,19 +17,22 @@ export abstract class PrivateAPI {
       });
       const data = await response.json();
 
-
-
       if (data.error) {
-        return { data: null, error: data.error };
+        return {
+          data: null,
+          error: data.error,
+        };
       }
-      
+
       return {
         data,
         error: null,
       };
     } catch (error: any) {
-      console.log("aaaaaaaaaaaa")
-      return { data: null, error: error.message };
+      return {
+        data: null,
+        error: error.message,
+      };
     }
   }
 

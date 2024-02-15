@@ -3,7 +3,7 @@ import { Modal, Upload, message } from "antd";
 import { RcFile } from "antd/es/upload";
 import { useState } from "react";
 import { PrivateAPI } from "../../../../api/PrivateAPI";
-import { Activity } from "../ActivityListView";
+import { ActivityCreationAttributes } from "../../../../designers/Activity/ActivityAttributes";
 
 const { Dragger } = Upload;
 
@@ -18,7 +18,7 @@ const DragAndDrop = ({
   open: boolean;
   setOpen: any;
   myClass: any;
-  activity: Activity;
+  activity: ActivityCreationAttributes;
   refetch: any;
   isLoading: boolean;
 }) => {
@@ -59,6 +59,7 @@ const DragAndDrop = ({
       type: "success",
       content: "Enviado com sucesso!",
     });
+    
     setOpen(false);
     setFiles(undefined);
     refetch();

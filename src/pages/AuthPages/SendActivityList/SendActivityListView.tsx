@@ -2,6 +2,9 @@ import { Button, Flex, Table, Typography } from "antd";
 import { SendActivityListModel } from "./SendActivityListModel";
 import { Loading } from "../../../components/Loading/Loading";
 import { DownloadFile } from "./helpers/downloadFile";
+import { ActivityAttributes } from "../../../designers/Activity/ActivityAttributes";
+import { ClassHasUserAttributes } from "../../../designers/ClassHasUser/ClassHasUserAttributes";
+import { Permissions } from "../../../api/Permissions";
 
 export type Activity = {
   id?: number;
@@ -33,7 +36,10 @@ export const SendActivityListView = ({
 }: ReturnType<typeof SendActivityListModel>) => {
   if (!data?.data) return <Loading />;
 
-  console.log(location.state.users.map((user: any) => user.user));
+  const className = location.state.classe.name;
+  const activityName = location.state.classe.activity.find(
+    (activity: ActivityAttributes) => activity.id === Number(id)
+  ).title;
 
   return (
     <div style={{ background: "#fff", padding: 16, borderRadius: 12 }}>
@@ -46,7 +52,7 @@ export const SendActivityListView = ({
             marginBottom: 0,
           }}
         >
-          {`${location.state.className}/${data?.data[0]?.activity?.title}`}
+          {`${className}/${activityName}`}
         </Typography.Title>
       </Flex>
       <div
@@ -70,9 +76,12 @@ export const SendActivityListView = ({
         </Flex>
       </div>
       <Table
-        dataSource={location.state.users
-          .filter((user: any) => user.role !== "owner")
-          .map((user: any) => user.user)}
+        dataSource={location.state.classHasUser
+          .filter(
+            ({ role }: ClassHasUserAttributes) =>
+              !Permissions.CheckAdminPermission(role)
+          )
+          .map(({ user }: ClassHasUserAttributes) => user)}
         columns={columns}
         style={{ overflowX: "scroll" }}
         rowKey="id"

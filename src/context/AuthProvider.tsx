@@ -23,12 +23,13 @@ export const AuthProvider = ({ children }: any) => {
       });
       setIsLoading(false);
 
-      return;
+      return data;
     }
 
     sessionStorage.setItem("AUTH_SESSION_KEY", data.token);
     setUser(data);
     setIsLoading(false);
+    return data;
   };
 
   const logout = async () => {
@@ -57,9 +58,9 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   useEffect(() => {
-    PrivateAPI.get("/user").then(({ data, error }) => {
-      console.log(data);
-      if (!error) setUser(data);
+    PrivateAPI.get("/user").then((data) => {
+      console.log(data)
+      if (!data.error) setUser(data.data);
       setIsLoading(false);
     });
   }, []);

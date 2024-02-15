@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Activity } from "./ActivityListView";
 import {
   CheckCircleOutlined,
   CloudDownloadOutlined,
@@ -12,10 +11,11 @@ import { PrivateAPI } from "../../../api/PrivateAPI";
 import { useAuthContext } from "../../../context/AuthContext";
 import { Permissions } from "../../../api/Permissions";
 import { Button, Popover, Typography } from "antd";
+import { ActivityAttributes } from "../../../designers/Activity/ActivityAttributes";
 
 export const ActivityListModel = () => {
   const [open, setOpen] = useState(false);
-  const [activityModal, setActivityModal] = useState<Activity>();
+  const [activityModal, setActivityModal] = useState<ActivityAttributes>();
   const { id } = useParams();
   const { user } = useAuthContext();
 
@@ -34,7 +34,7 @@ export const ActivityListModel = () => {
     await refetch();
   };
 
-  const handleSendActivity = async (key: Activity) => {
+  const handleSendActivity = async (key: ActivityAttributes) => {
     setActivityModal(key);
     setOpen(true);
   };
@@ -43,7 +43,7 @@ export const ActivityListModel = () => {
     {
       title: "Titulo",
       dataIndex: "title",
-      filters: data?.data?.activity?.map((activity: Activity) => ({
+      filters: data?.data?.activity?.map((activity: ActivityAttributes) => ({
         text: activity?.title,
         value: String(activity?.id),
       })),
@@ -62,7 +62,11 @@ export const ActivityListModel = () => {
       render: (text: any) => {
         return (
           <Typography.Text>
-            {text.length}/{data?.data?.class?.filter((user:any) => user.role !=="owner").length}
+            {text.length}/
+            {
+              data?.data?.class?.filter((user: any) => user.role !== "owner")
+                .length
+            }
           </Typography.Text>
         );
       },
@@ -83,7 +87,7 @@ export const ActivityListModel = () => {
     {
       title: "Desativar",
       dataIndex: "isActive",
-      render: (text: boolean, key: any) => {
+      render: (text: boolean, key: ActivityAttributes) => {
         return text ? (
           <a
             type="link"
@@ -110,7 +114,7 @@ export const ActivityListModel = () => {
             </Link>
             <Link
               to={"/sendactivity/" + Number(text)}
-              state={{ className: data?.data?.name, users: data?.data?.class }}
+              state={{ classe: data?.data, classHasUser: data?.data?.class }}
             >
               Entregas
             </Link>
@@ -131,12 +135,10 @@ export const ActivityListModel = () => {
     {
       title: "Entregar",
       dataIndex: "id",
-      render: (text: string, key: Activity) => {
+      render: (_: string, key: ActivityAttributes) => {
         const checkIfSent = key.sendActivity.find(
-          (activity) => activity.userId === user.id
+          (activity) => activity.user.id === user.id
         );
-
-        console.log(text);
 
         return checkIfSent ? (
           <div style={{ display: "flex", color: "#168CFF", gap: 4 }}>
@@ -162,13 +164,13 @@ export const ActivityListModel = () => {
     classe: {
       ...data?.data,
       activity: data?.data?.activity
-        .map((activity: Activity) => {
+        .map((activity: ActivityAttributes) => {
           return {
             ...activity,
             ownerName: activity?.user?.name,
           };
         })
-        .sort((a: Activity, b: Activity) => {
+        .sort((a: ActivityAttributes, b: ActivityAttributes) => {
           return a.title.localeCompare(b.title);
         }),
     },

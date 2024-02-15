@@ -5,26 +5,6 @@ import { Permissions } from "../../../api/Permissions";
 import { Loading } from "../../../components/Loading/Loading";
 import DragAndDrop from "./components/DragAndDrop";
 
-export type Activity = {
-  id?: number;
-  title: string;
-  resume: string | null;
-  objectives: string;
-  total_time: number;
-  recurses: string;
-  pdf_file_url: string;
-  userId: number;
-  user: {
-    id: number;
-    name: string;
-  };
-  guide: string;
-  abilities: { id: number; name: string }[];
-  isActive: boolean;
-  creatorName: string;
-  sendActivity: { userId: number; activityId: string }[];
-};
-
 export const ActivityListView = ({
   classe,
   columns,
@@ -38,8 +18,6 @@ export const ActivityListView = ({
   const navigate = useNavigate();
 
   if (!classe) return <Loading />;
-
-  console.log(classe);
 
   return (
     <div style={{ background: "#fff", padding: 16, borderRadius: 12 }}>

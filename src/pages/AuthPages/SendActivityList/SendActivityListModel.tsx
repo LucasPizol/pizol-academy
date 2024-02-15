@@ -2,12 +2,14 @@ import { useLocation, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { PrivateAPI } from "../../../api/PrivateAPI";
 import { Typography } from "antd";
+import { ClassHasUserAttributes } from "../../../designers/ClassHasUser/ClassHasUserAttributes";
+import { SendActivityAttributes } from "../../../designers/SendActivity/SendActivityAttributes";
+import { UserAttributes } from "../../../designers/User/UserAttributes";
 
 export const SendActivityListModel = () => {
   const { id } = useParams();
 
   const location = useLocation();
-
 
   const { data, refetch, isRefetching } = useQuery({
     queryKey: ["getSendActivityTable" + id],
@@ -24,13 +26,14 @@ export const SendActivityListModel = () => {
       title: "Nome do Aluno",
       dataIndex: "name",
 
-      filters: location.state.users.map((user: any) => {
-        console.log(user)
-        return {
-          text: user.user.name,
-          value: String(user.user.id),
-        };
-      }),
+      filters: location.state.classHasUser.map(
+        ({ user }: ClassHasUserAttributes) => {
+          return {
+            text: user.name,
+            value: user.id,
+          };
+        }
+      ),
 
       filterMode: "menu" as any,
       filterSearch: true,
@@ -39,8 +42,7 @@ export const SendActivityListModel = () => {
         return record.id === Number(value);
       },
 
-      render: (text: string, key: any) => {
-        console.log(text);
+      render: (_: string, key: UserAttributes) => {
         return <Typography.Text>{key?.name}</Typography.Text>;
       },
     },
@@ -49,7 +51,7 @@ export const SendActivityListModel = () => {
       dataIndex: "id",
       render: (id: number) => {
         const checkIfSended = data?.data.find(
-          (sendActivity: { userId: number }) => sendActivity.userId === id
+          ({ user }: SendActivityAttributes) => user.id === id
         );
         return checkIfSended ? (
           <Typography.Text style={{ color: "#1677ff" }}>
@@ -70,6 +72,6 @@ export const SendActivityListModel = () => {
     refetch,
     isLoading: isRefetching,
     id,
-    location
+    location,
   };
 };

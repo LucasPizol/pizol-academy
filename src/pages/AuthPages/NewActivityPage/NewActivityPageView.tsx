@@ -67,8 +67,21 @@ export const NewActivityPageView = ({
         style={{
           maxWidth: 800,
         }}
+        onFinish={handleSubmit}
       >
-        <Form.Item label="Título" name="title" rules={ruleType}>
+        <Form.Item
+          label="Título"
+          name="title"
+          rules={[
+            ...ruleType,
+            {
+              required: true,
+              max: 30,
+              min: 5,
+              message: "Seu título deve ter entre 5 e 30 caracteres",
+            },
+          ]}
+        >
           <Input placeholder="Título" />
         </Form.Item>
         <Form.Item label="Resumo" name="resume">
@@ -116,7 +129,7 @@ export const NewActivityPageView = ({
         </Row>
 
         <Form.Item>
-          <Button type="primary" onClick={handleSubmit} loading={loadingBtn}>
+          <Button type="primary" loading={loadingBtn} htmlType="submit">
             Submeter
           </Button>
         </Form.Item>

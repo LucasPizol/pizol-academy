@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import { PrivateAPI } from "../../../api/PrivateAPI";
 import { useState } from "react";
+import { ActivityAttributes } from "../../../designers/Activity/ActivityAttributes";
 
 export type Ability = {
   id: number;
@@ -21,21 +22,18 @@ export const NewActivityPageModel = () => {
 
   const [loadingBtn, setLoadingBtn] = useState<boolean>(false);
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
+  const handleSubmit = async (values: ActivityAttributes) => {
     setLoadingBtn(true);
-    const fields = form.getFieldsValue();
 
     const fieldValues = {
-      ...fields,
-      total_time: Number(fields.total_time),
+      ...values,
+      total_time: Number(values.total_time),
       classId: Number(location.state.classId),
     };
 
     const { error } = await PrivateAPI.post("/activity", fieldValues);
-    
-    setLoadingBtn(false)
+
+    setLoadingBtn(false);
 
     if (error) {
       Swal.fire({
@@ -47,7 +45,6 @@ export const NewActivityPageModel = () => {
     }
 
     history.back();
-    
   };
 
   return {
@@ -55,6 +52,6 @@ export const NewActivityPageModel = () => {
     abilities: data,
     handleSubmit,
     form,
-    loadingBtn
+    loadingBtn,
   };
 };
