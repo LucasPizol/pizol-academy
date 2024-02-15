@@ -1,4 +1,5 @@
-import { Authentication } from "../context/AuthProvider";
+import { LoginAttributes } from "../designers/Auth/LoginAttributes";
+import { RegisterAttributes } from "../designers/Auth/RegisterAttributes";
 
 export abstract class PublicAPI {
   static async #fetchJsonData(endpoint: string, body?: any) {
@@ -16,12 +17,12 @@ export abstract class PublicAPI {
     return data;
   }
 
-  static async login(params: Authentication) {
+  static async login(params: LoginAttributes) {
     const data = PublicAPI.#fetchJsonData("/login", params);
     return data;
   }
 
-  static async register(params: Authentication) {
+  static async register(params: RegisterAttributes) {
     if (params.password !== params.confirmPassword) {
       return { error: "Senhas não conferem." };
     }

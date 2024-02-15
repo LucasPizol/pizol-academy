@@ -1,25 +1,25 @@
 import { Form } from "antd";
 import { useAuthContext } from "../../../context/AuthContext";
-import Swal from "sweetalert2";
+import { useState } from "react";
+import { RegisterAttributes } from "../../../designers/Auth/RegisterAttributes";
 
 export const RegisterModel = () => {
   const [form] = Form.useForm();
 
   const { isLoading, register } = useAuthContext();
+  const [alert, setAlert] = useState<string>();
 
-  const submitForm = async () => {
-    const values = form.getFieldsValue();
-
+  const submitForm = async (values: RegisterAttributes) => {
     if (values.password !== values.confirmPassword) {
-      Swal.fire({
-        title: "Senhas não confere",
-      });
+      setAlert("Senhas não conferem");
     }
 
     const data = await register(form.getFieldsValue());
 
-    console.log(data);
+    if (data.error) {
+      setAlert(data.error);
+    }
   };
 
-  return { form, isLoading, submitForm };
+  return { form, isLoading, submitForm, alert };
 };

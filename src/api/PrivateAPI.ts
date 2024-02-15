@@ -4,26 +4,33 @@ export abstract class PrivateAPI {
     method?: "POST" | "PUT" | "DELETE",
     body?: any
   ) {
-    const token = sessionStorage.getItem("AUTH_SESSION_KEY");
+    try {
+      const token = sessionStorage.getItem("AUTH_SESSION_KEY");
 
-    const response = await fetch(import.meta.env.VITE_BASE_URL + endpoint, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      method: method ?? "GET",
-      body: body ? JSON.stringify(body) : undefined,
-    });
-    const data = await response.json();
+      const response = await fetch(import.meta.env.VITE_BASE_URL + endpoint, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        method: method ?? "GET",
+        body: body ? JSON.stringify(body) : undefined,
+      });
+      const data = await response.json();
 
-    if (data.error) {
-      return { data: null, error: data.error };
+
+
+      if (data.error) {
+        return { data: null, error: data.error };
+      }
+      
+      return {
+        data,
+        error: null,
+      };
+    } catch (error: any) {
+      console.log("aaaaaaaaaaaa")
+      return { data: null, error: error.message };
     }
-
-    return {
-      data,
-      error: null,
-    };
   }
 
   static async #fetchBlob(

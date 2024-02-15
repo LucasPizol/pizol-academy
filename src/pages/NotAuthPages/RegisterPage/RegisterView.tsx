@@ -1,4 +1,4 @@
-import { Button, Input, Form, Typography, Col, Row } from "antd";
+import { Button, Input, Form, Typography, Col, Row, Alert } from "antd";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
@@ -13,6 +13,7 @@ export const RegisterView = ({
   form,
   isLoading,
   submitForm,
+  alert,
 }: ReturnType<typeof RegisterModel>) => {
   const navigate = useNavigate();
   return (
@@ -57,13 +58,21 @@ export const RegisterView = ({
               Faça a gestão de suas atividades acadêmicas
             </Typography.Text>
           </header>
-          <Form form={form}>
+          <Form form={form} onFinish={(e) => submitForm(e)}>
             <Form.Item
               name="username"
               rules={[
                 {
                   required: true,
-                  message: "Please input your Username!",
+                  message: "Por favor, coloque seu usuário!",
+                },
+                {
+                  message: "Seu usuário necessita ter 4 caracteres",
+                  min: 4,
+                },
+                {
+                  message: "Seu usuário excedeu o limite de 20 caracteres",
+                  max: 20,
                 },
               ]}
             >
@@ -78,7 +87,12 @@ export const RegisterView = ({
               rules={[
                 {
                   required: true,
-                  message: "Please input your Username!",
+                  message: "Por favor, coloque seu nome completo.",
+                  min: 3,
+                },
+                {
+                  message: "Seu usuário excedeu o limite de 30 caracteres.",
+                  max: 30,
                 },
               ]}
             >
@@ -97,6 +111,10 @@ export const RegisterView = ({
                   required: true,
                   message: "Por favor digite sua senha!",
                 },
+                {
+                  message: "Sua senha precisa ter no mínimo 6 caracteres",
+                  min: 6,
+                },
               ]}
             >
               <Password
@@ -113,16 +131,17 @@ export const RegisterView = ({
                   required: true,
                   message: "Por favor digite sua senha!",
                 },
+
+                {
+                  message: "Sua senha precisa ter no mínimo 6 caracteres",
+                  min: 6,
+                },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(
-                      new Error(
-                        "The new password that you entered do not match!"
-                      )
-                    );
+                    return Promise.reject(new Error("As senhas não combinam!"));
                   },
                 }),
               ]}
@@ -134,8 +153,8 @@ export const RegisterView = ({
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" onClick={submitForm}>
-                {isLoading ? <Spinner color="#fff" size={10} /> : "Login"}
+              <Button type="primary" htmlType="submit">
+                {isLoading ? <Spinner color="#fff" size={10} /> : "Registrar"}
               </Button>
             </Form.Item>
             <Typography.Text>Já tem uma conta? </Typography.Text>
@@ -143,6 +162,8 @@ export const RegisterView = ({
             <Typography.Link onClick={() => navigate("/auth/login")}>
               Entre agora!
             </Typography.Link>
+
+            {alert ? <Alert message={alert} type="error" showIcon /> : null}
           </Form>
           <div></div>
         </Col>
